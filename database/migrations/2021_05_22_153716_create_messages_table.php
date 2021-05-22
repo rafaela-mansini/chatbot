@@ -15,9 +15,9 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('boot_code');
+            $table->string('bot_code');
             $table->string('expected_entries');
-            $table->string('boot_response');
+            $table->string('bot_response');
             $table->string('translation_language');
             $table->timestamps();
         });
