@@ -30,6 +30,33 @@ class TransactionService {
         
     }
 
+    public function withdraw(Float $amount, String $currency){
+
+        $currentBalance = auth()->user()->balance;
+
+        if($currentBalance < $amount){
+            $this->data = [
+                'success' => false,
+                'messages' => ['message' => trans('messages.notBalanceWithdraw')]
+            ];
+            return false;
+        }
+
+        $user = auth()->user();
+        $user->balance = $currentBalance - $amount;
+        $user->save();
+
+        $transaction = $this->storeTransaction('withdraw', $currentBalance, $amount, $user->balance, $user);
+
+        $this->data = [
+            'success' => true,
+            'user' => $user,
+            'transaction' => $transaction
+        ];
+
+        return true;
+    }
+
     private function storeTransaction(String $method, Float $currentBalance, Float $transactionBalance, Float $newBalance, User $user){
         return Transaction::create([
             'method' => 'balance',

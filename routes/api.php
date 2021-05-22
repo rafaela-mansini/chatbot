@@ -24,4 +24,5 @@ Route::post('messages', [MessagesController::class, 'show']);
 Route::middleware('auth:api')->group(function() {
     Route::get('transactions/balance', [TransactionsController::class, 'balance']);
     Route::put('transactions/deposit', [TransactionsController::class, 'deposit']);
+    Route::put('transactions/withdraw', [TransactionsController::class, 'withdraw']);
 });

@@ -42,4 +42,23 @@ class TransactionsController extends Controller
         }
         
     }
+
+    public function withdraw(DepositRequest $request){
+        $validated = $request->validated();
+
+        try {
+            $service = new TransactionService();
+            $result = $service->withdraw($request->amount, $request->currency);
+
+            if(!$result){
+                return response()->json([ 'success' => false, 'data' => $service->data ], 400);    
+            }
+            
+            return response()->json([ 'success' => true, 'data' => $service->data ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);
+        }
+        
+    }
 }
