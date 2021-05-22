@@ -75,7 +75,6 @@ class TransactionService {
             return $amount;
         }
 
-        //validar se está em alguma listagem de currencys
         if(!$this->isValidCurrency($currency)){
             throw new \Exception(trans('messages.invalidCurrency'));
         }
@@ -96,7 +95,6 @@ class TransactionService {
 
         $currencyToBaseApi = $amount / $result['rates'][$currency];
         $currencyBaseToUserBase = $currencyToBaseApi * $result['rates'][$baseCurrency];
-        // dd($currencyBaseToUserBase);
 
         return round($currencyBaseToUserBase, 2);
     }

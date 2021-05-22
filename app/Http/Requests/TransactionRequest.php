@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DepositRequest extends FormRequest
+class TransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class DepositRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric',
-            'currency' => 'required|string'
+            'currency' => 'string'
         ];
     }
 }

@@ -43,6 +43,6 @@ class User extends Authenticatable
      */
     public function transactions()
     {
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany('App\Transaction')->orderBy('created_at', 'desc');
     }
 }

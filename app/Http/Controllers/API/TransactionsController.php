@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Transaction;
-use App\Http\Requests\DepositRequest;
+use App\Http\Requests\TransactionRequest;
 use App\Http\Services\TransactionService;
 
 class TransactionsController extends Controller
@@ -26,12 +26,12 @@ class TransactionsController extends Controller
         
     }
 
-    public function deposit(DepositRequest $request){
+    public function deposit(TransactionRequest $request){
         $validated = $request->validated();
 
         try {
             $service = new TransactionService();
-            $service->deposit($request->amount, $request->currency);
+            $service->deposit($request->amount, $request->currency ?? env('DEFAULT_CURRENCY'));
             
             return response()->json([ 'success' => true, 'data' => $service->data ]);
 
@@ -41,12 +41,12 @@ class TransactionsController extends Controller
         
     }
 
-    public function withdraw(DepositRequest $request){
+    public function withdraw(TransactionRequest $request){
         $validated = $request->validated();
 
         try {
             $service = new TransactionService();
-            $result = $service->withdraw($request->amount, $request->currency);
+            $result = $service->withdraw($request->amount, $request->currency ?? env('DEFAULT_CURRENCY'));
 
             if(!$result){
                 return response()->json([ 'success' => false, 'data' => $service->data ], 400);    
