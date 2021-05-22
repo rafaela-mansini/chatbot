@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MessagesController;
+use App\Http\Controllers\API\TransactionsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,8 +21,6 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('messages', [MessagesController::class, 'show']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    // $user = auth()->user()->transactions; // to access transactions
-    // dd($user);
-    return response()->json([ 'testing' => true, "user" => auth()->user() ]);
+Route::middleware('auth:api')->group(function() {
+    Route::get('/transactions/balance', [TransactionsController::class, 'balance']);
 });
