@@ -14,5 +14,6 @@ return [
 
     'unknown' => 'Sorry, but i don\'t recognize your answer. Can you try again?',
     'deposit' => 'What is the value from your deposit?',
+    'currency' => 'What currency do you want to make this deposit?'
 
 ];
