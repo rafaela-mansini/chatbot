@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Transaction;
+use App\Currency;
 use App\User;
 use App\Http\Services\Curl;
 
@@ -78,7 +79,6 @@ class TransactionService {
         if(!$this->isValidCurrency($currency)){
             throw new \Exception(trans('messages.invalidCurrency'));
         }
-        $this->isValidCurrency($currency);
         
         $endpoint = env('CURRENCY_API_ENDPOINT').'latest?access_key='.env('CURRENCY_API_KEY').'&base='.env('DEFAULT_CURRENCY').'&symbols='.$currency.','.$baseCurrency;
         $curl = new Curl($endpoint);
@@ -102,8 +102,9 @@ class TransactionService {
     }
 
     private function isValidCurrency($currency){
-        // verify if is valid currency
-        return true;
+        $code = Currency::whereCurrency($currency)->first();
+
+        return isset($code) ? true : false;
     }
 
     private function storeTransaction(String $method, Float $currentBalance, ?Float $transactionBalance, ?Float $newBalance){

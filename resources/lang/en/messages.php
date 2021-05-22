@@ -16,5 +16,5 @@ return [
     'deposit' => 'What is the value from your deposit?',
     'currency' => 'What currency do you want to make this deposit?',
     'notBalanceWithdraw' => 'Oops, you don\'t have enough balance for this transaction.',
-    'messages.invalidCurrency' => 'The currency informed is invalid.',
+    'invalidCurrency' => 'The currency informed is invalid.',
 ];
