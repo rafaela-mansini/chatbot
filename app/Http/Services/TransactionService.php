@@ -8,31 +8,40 @@ use App\User;
 class TransactionService {
 
     public $data;
+    public $user;
 
     public function __construct(){
-        $this->repository = app(Transaction::class);
+        $this->user = auth()->user();
+    }
+
+    public function balance(){
+        $currentBalance = $this->user->balance;
+        $transaction = $this->storeTransaction('deposit', $currentBalance, null, null);
+
+        $this->data = [
+            'success' => true,
+            'balance' => $this->user->balance,
+        ];
     }
 
     public function deposit(Float $amount, String $currency){
         
-        $user = auth()->user();
-        $currentBalance = $user->balance;
-        $user->balance = $currentBalance + $amount;
-        $user->save();
+        $currentBalance = $this->user->balance;
+        $this->user->balance = $currentBalance + $amount;
+        $this->user->save();
 
-        $transaction = $this->storeTransaction('deposit', $currentBalance, $amount, $user->balance, $user);
+        $transaction = $this->storeTransaction('deposit', $currentBalance, $amount, $this->user->balance);
 
         $this->data = [
             'success' => true,
-            'user' => $user,
-            'transaction' => $transaction
+            'balance' => $this->user->balance,
         ];
         
     }
 
     public function withdraw(Float $amount, String $currency){
 
-        $currentBalance = auth()->user()->balance;
+        $currentBalance = $this->user->balance;
 
         if($currentBalance < $amount){
             $this->data = [
@@ -42,28 +51,26 @@ class TransactionService {
             return false;
         }
 
-        $user = auth()->user();
-        $user->balance = $currentBalance - $amount;
-        $user->save();
+        $this->user->balance = $currentBalance - $amount;
+        $this->user->save();
 
-        $transaction = $this->storeTransaction('withdraw', $currentBalance, $amount, $user->balance, $user);
+        $transaction = $this->storeTransaction('withdraw', $currentBalance, $amount, $this->user->balance);
 
         $this->data = [
             'success' => true,
-            'user' => $user,
-            'transaction' => $transaction
+            'balance' => $this->user->balance,
         ];
 
         return true;
     }
 
-    private function storeTransaction(String $method, Float $currentBalance, Float $transactionBalance, Float $newBalance, User $user){
+    private function storeTransaction(String $method, Float $currentBalance, ?Float $transactionBalance, ?Float $newBalance){
         return Transaction::create([
             'method' => 'balance',
             'current_balance' => $currentBalance,
             'transaction_balance' => $transactionBalance,
             'new_balance' => $newBalance,
-            'user_id' => $user->id
+            'user_id' => $this->user->id
         ]);
     }
 }

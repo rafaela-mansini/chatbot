@@ -15,14 +15,12 @@ class TransactionsController extends Controller
         $balance = auth()->user()->balance;
 
         try {
-            $transaction = Transaction::create([
-                'method' => 'balance',
-                'current_balance' => $balance,
-                'user_id' => auth()->user()->id
-            ]);
-            return response()->json([ 'success' => true, 'balance' => $balance, 'transaction' => $transaction ]);
+            $service = new TransactionService();
+            $service->balance();
+            
+            return response()->json([ 'success' => true, 'data' => $service->data ]);
 
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) {dd($th);
             return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);
         }
         
