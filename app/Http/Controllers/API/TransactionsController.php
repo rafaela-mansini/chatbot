@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Transaction;
+use App\Http\Requests\DepositRequest;
+use App\Http\Services\TransactionService;
 
 class TransactionsController extends Controller
 {
@@ -21,22 +23,23 @@ class TransactionsController extends Controller
             return response()->json([ 'success' => true, 'balance' => $balance, 'transaction' => $transaction ]);
 
         } catch (\Throwable $th) {
-            return response()->json([ 'success' => false, 'message' => $th->getMessage() ]);
+            return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);
         }
         
     }
 
-    public function store(Request $request){
-        dd($request->all());
-        if($request->method == 'balance'){
-            $request->validate([
-                'balance' => 'required'
-            ]);
-            // just information about the balance
+    public function deposit(DepositRequest $request){
+        $validated = $request->validated();
 
+        try {
+            $service = new TransactionService();
+            $service->deposit($request->amount, $request->currency);
+            
+            return response()->json([ 'success' => true, 'data' => $service->data ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);
         }
-        else{
-            // inform currency and value to transaction
-        }
+        
     }
 }
