@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->double('current_balance', 8, 2);
             $table->double('transaction_balance', 8, 2)->nullable();
             $table->double('new_balance', 8, 2)->nullable();
+            $table->string('currency');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

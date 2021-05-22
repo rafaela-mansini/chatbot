@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $fillable = [ 'method', 'current_balance', 'transaction_balance', 'new_balance', 'user_id' ];
+    protected $fillable = [ 'method', 'current_balance', 'transaction_balance', 'new_balance', 'user_id', 'currency' ];
 
     /**
      * Return user from transaction

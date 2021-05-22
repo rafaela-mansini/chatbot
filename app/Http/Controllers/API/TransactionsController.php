@@ -20,7 +20,7 @@ class TransactionsController extends Controller
             
             return response()->json([ 'success' => true, 'data' => $service->data ]);
 
-        } catch (\Throwable $th) {dd($th);
+        } catch (\Exception $th) {
             return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);
         }
         
