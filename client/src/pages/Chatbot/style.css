@@ -6,9 +6,21 @@
     color: #000;
     min-height: 95vh;
     box-shadow: #bfbfbf 0 0 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.chatbot{
+    overflow: auto;
+    max-height: 80vh;    
 }
 
 .title{
     text-align: center;
     font-size: calc(14px + 2vmin);
+    position: absolute;
+    top: 10px;
+    width: 100%;
 }

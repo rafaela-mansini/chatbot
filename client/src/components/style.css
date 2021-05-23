@@ -34,6 +34,28 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    text-align: right;
-    
+    text-align: right;   
+}
+
+.form{
+    display: flex;
+    margin-top: 15px;
+    box-shadow: #d4d4d4 0px 2px 5px 0px;
+    outline: none;
+}
+.form input{
+    border: 1px solid #e7e7e7;
+    width: 100%;
+    padding: 20px 10px;
+}
+.form button{
+    width: 50px;
+    background: #3da0cc;
+    border: 1px solid #3da0cc;
+    font-size: 25px;
+    color: #fff;
+}
+
+.load{
+    color: #3a3a3a;
 }

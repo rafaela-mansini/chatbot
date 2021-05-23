@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { DisappearedLoading } from 'react-loadingg';
 import './style.css';
 
 const Message = ({ sender }) => {
@@ -7,6 +7,9 @@ const Message = ({ sender }) => {
 
     return(
         <div className={sender}>
+            {sender == "bot" &&
+                <span className='load'><DisappearedLoading size='small' color='#888888' style={{'position': 'relative', 'height': '30px'}} /></span>
+            }
             <div className="message">
                 Message {sender}
             </div>
