@@ -20,7 +20,7 @@ use App\Http\Controllers\API\TransactionsController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('messages', [MessagesController::class, 'show']);
+Route::get('messages', [MessagesController::class, 'show']);
 
 Route::middleware('auth:api')->group(function() {
     Route::get('transactions/balance', [TransactionsController::class, 'balance']);

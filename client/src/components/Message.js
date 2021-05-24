@@ -1,21 +1,15 @@
 import { DisappearedLoading } from 'react-loadingg';
 import './style.css';
 
-const Message = ({ sender }) => {
-
-    const date = new Date();
+const Message = ({ sender, message, date }) => {
 
     return(
         <div className={sender}>
-            {sender == "bot" &&
+            {sender == "bot" && !message &&
                 <span className='load'><DisappearedLoading size='small' color='#888888' style={{'position': 'relative', 'height': '30px'}} /></span>
             }
-            <div className="message">
-                Message {sender}
-            </div>
-            <div className="time">
-                {date.getHours()}:{date.getMinutes()}
-            </div>
+            <div className="message"> {message} </div>
+            <div className="time"> {date} </div>
         </div>
     )
 }

@@ -10,22 +10,29 @@ use App\Message;
 class MessagesController extends Controller
 {
     public function show(Request $request){
-        
+        $data = [];
         $message = Message::where('expected_entries', 'like', "%$request->expected_entries%")->first();
-        if($message){
-            $messages = [
-                'deposit' => trans('messages.deposit'),
-                'currency' => trans('messages.currency')
+
+        if(!isset($request->expected_entries) || !isset($message)){
+            $data = [
+                'message'=> trans('messages.unknown'),
+                'success' => false
             ];
-            $success = true;
         }
         else{
-            $messages = [
-                'message' => trans('messages.unknown')
+            $messages = [];
+            $allMessages = explode('|', $message->bot_response);
+            foreach($allMessages as $setMessage){
+                array_push($messages, trans('messages.'.$setMessage));
+            }
+
+            $data = [
+                'messages' => $messages,
+                'code' => $message->bot_code,
+                'success' => true
             ];
-            $success = false;
         }
 
-        return response()->json(['messsages' => $messages, 'success' => $success]);
+        return response()->json($data);
     }
 }
