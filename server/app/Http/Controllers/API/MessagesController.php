@@ -15,7 +15,8 @@ class MessagesController extends Controller
 
         if(!isset($request->expected_entries) || !isset($message)){
             $data = [
-                'message'=> trans('messages.unknown'),
+                'messages'=> [trans('messages.unknown')],
+                'code' => 'unknown',
                 'success' => false
             ];
         }
