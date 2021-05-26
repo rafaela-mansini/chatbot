@@ -23,4 +23,10 @@ return [
     'setEmail' => 'Can you text your email',
     'setPassword' => 'Now, text your password',
     'confirmPassword' => 'Can you repeat your password',
+    'loginEmail' => 'Enter the registered e-mail',
+    'loginPassword' => 'Enter with the password',
+    'logged' => 'Do you logged in your system. What is your next  step? Make a deposit, a withdraw, set your balance or set your currency?',
+    'deposit' => 'Enter the amount for deposit',
+    'currencyDeposit' => 'Do you want to set a currency for this transaction? Type NO to leave the default currency',
+    'successDeposit' => 'Your deposit was saved.',
 ];

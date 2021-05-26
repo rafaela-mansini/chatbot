@@ -30,10 +30,11 @@ class TransactionsController extends Controller
         $validated = $request->validated();
 
         try {
+            $currency = (isset($request->currency) && $request->currency !== 'no') ? $request->currency : env('DEFAULT_CURRENCY');
             $service = new TransactionService();
-            $service->deposit($request->amount, $request->currency ?? env('DEFAULT_CURRENCY'));
+            $service->deposit($request->amount, $currency);
             
-            return response()->json([ 'success' => true, 'data' => $service->data ]);
+            return response()->json([ 'success' => true, 'data' => $service->data, 'message' => trans('messages.successDeposit') ]);
 
         } catch (\Throwable $th) {
             return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);

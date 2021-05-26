@@ -12,7 +12,7 @@ const Chatbot = () => {
     const [objectToSave, setObjectToSave] = useState([]);
     const [nextStep, setNextStep] = useState('');
     const [accessToken, setAccessToken] = useState('');
-    const functionsServer = ['registerAccount', 'login', 'get_balance'];
+    const functionsServer = ['registerAccount', 'login', 'deposit'];
 
     const searchMessageServer = async (message) => {
         const response = await api.get('messages', {
@@ -45,9 +45,15 @@ const Chatbot = () => {
                 break;
             case 'login':
                 login();
+                break;
+            case 'deposit':
+                deposit();
+                break;
             default:
                 break;
         }
+        setNextStep('');
+        setObjectToSave([]);
     }
 
     const registerAccount = async () => {
@@ -70,12 +76,47 @@ const Chatbot = () => {
         .catch((error) => {
             setMessageBot(error.message);
         });
-        setNextStep('');
 
     }
 
     const login = async () => {
-        
+        const data = {
+            "email": objectToSave[0],
+            "password": objectToSave[1]
+        }
+        const response = await api.post('login', data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => {
+            setAccessToken(response.data.access_token);
+            setMessageBot(response.data.message);
+        })
+        .catch((error) => {
+            setMessageBot(error.message);
+        });
+    }
+
+    const deposit = async () => {
+        let currency = objectToSave[1].toLowerCase() == 'no' ? 'no' : objectToSave[1];
+        const data = {
+            "amount": objectToSave[0],
+            "currency": currency
+        }
+        await api.put('transactions/deposit', data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
+        .then((response) => {
+            setMessageBot(response.data.message);
+        })
+        .catch((error) => {
+            setMessageBot(error.message);
+        });
     }
 
     useEffect(() => {
