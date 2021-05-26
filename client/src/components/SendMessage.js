@@ -4,14 +4,16 @@ import api from '../services/server';
 import buildMessage from '../helper/buildMessage';
 import './style.css';
 
-const SendMessage = ({ setOperation, setMessage }) => {
+const SendMessage = ({ saveMessageUser }) => {
     const [messageCustomer, setMessageCustomer] = useState('');
     const handleMessage = (e) => setMessageCustomer(e.target.value);
 
     const submitMessage = async (e) => {
         e.preventDefault()
-        const customerMessage = await buildMessage(messageCustomer, 'customer');
-        setMessage(customerMessage);
+        // const customerMessage = await buildMessage(messageCustomer, 'customer');
+        saveMessageUser(messageCustomer)
+        // searchMessageServer(messageCustomer)
+        // setMessage(customerMessage);
         setMessageCustomer('');
     }
     

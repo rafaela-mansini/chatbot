@@ -15,21 +15,18 @@ class MessagesController extends Controller
 
         if(!isset($request->expected_entries) || !isset($message)){
             $data = [
-                'messages'=> [trans('messages.unknown')],
+                'message'=> trans('messages.unknown'),
                 'code' => 'unknown',
                 'success' => false
             ];
         }
         else{
-            $messages = [];
-            $allMessages = explode('|', $message->bot_response);
-            foreach($allMessages as $setMessage){
-                array_push($messages, trans('messages.'.$setMessage));
-            }
 
             $data = [
-                'messages' => $messages,
+                'message' => trans('messages.'.$message->bot_response),
                 'code' => $message->bot_code,
+                'bot_response' => $message->bot_response,
+                'next_step' => $message->next_step,
                 'success' => true
             ];
         }
