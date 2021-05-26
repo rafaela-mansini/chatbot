@@ -12,7 +12,7 @@ const Chatbot = () => {
     const [objectToSave, setObjectToSave] = useState([]);
     const [nextStep, setNextStep] = useState('');
     const [accessToken, setAccessToken] = useState('');
-    const functionsServer = ['registerAccount', 'login', 'deposit'];
+    const functionsServer = ['registerAccount', 'login', 'deposit', 'withdraw', 'balance'];
 
     const searchMessageServer = async (message) => {
         const response = await api.get('messages', {
@@ -48,6 +48,12 @@ const Chatbot = () => {
                 break;
             case 'deposit':
                 deposit();
+                break;
+            case 'withdraw':
+                withdraw();
+                break;
+            case 'balance':
+                balance();
                 break;
             default:
                 break;
@@ -105,6 +111,43 @@ const Chatbot = () => {
             "currency": currency
         }
         await api.put('transactions/deposit', data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
+        .then((response) => {
+            setMessageBot(response.data.data.message);
+        })
+        .catch((error) => {
+            setMessageBot(error.message);
+        });
+    }
+
+    const withdraw = async () => {
+        let currency = objectToSave[1].toLowerCase() == 'no' ? 'no' : objectToSave[1];
+        const data = {
+            "amount": objectToSave[0],
+            "currency": currency
+        }
+        await api.put('transactions/withdraw', data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
+        .then((response) => {
+            setMessageBot(response.data.data.message);
+        })
+        .catch((error) => {
+            setMessageBot(error.message);
+        });
+    }
+
+    const balance = async () => {
+        await api.get('transactions/balance', {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',

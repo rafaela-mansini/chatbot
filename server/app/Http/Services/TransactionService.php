@@ -38,6 +38,7 @@ class TransactionService {
         $this->data = [
             'success' => true,
             'balance' => $this->user->balance,
+            'message' => trans('messages.successDeposit'),
         ];
         
     }
@@ -50,7 +51,7 @@ class TransactionService {
         if($currentBalance < $currency_exchange){
             $this->data = [
                 'success' => false,
-                'messages' => ['message' => trans('messages.notBalanceWithdraw')]
+                'message' => trans('messages.notBalanceWithdraw')
             ];
             return false;
         }
@@ -63,6 +64,7 @@ class TransactionService {
         $this->data = [
             'success' => true,
             'balance' => $this->user->balance,
+            'message' => trans('messages.successWithdraw')
         ];
 
         return true;

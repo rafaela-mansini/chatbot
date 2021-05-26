@@ -34,7 +34,7 @@ class TransactionsController extends Controller
             $service = new TransactionService();
             $service->deposit($request->amount, $currency);
             
-            return response()->json([ 'success' => true, 'data' => $service->data, 'message' => trans('messages.successDeposit') ]);
+            return response()->json([ 'success' => true, 'data' => $service->data ]);
 
         } catch (\Throwable $th) {
             return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);
@@ -44,13 +44,14 @@ class TransactionsController extends Controller
 
     public function withdraw(TransactionRequest $request){
         $validated = $request->validated();
-
+        
         try {
+            $currency = (isset($request->currency) && $request->currency !== 'no') ? $request->currency : env('DEFAULT_CURRENCY');
             $service = new TransactionService();
-            $result = $service->withdraw($request->amount, $request->currency ?? env('DEFAULT_CURRENCY'));
+            $result = $service->withdraw($request->amount, $currency);
 
             if(!$result){
-                return response()->json([ 'success' => false, 'data' => $service->data ], 400);    
+                return response()->json([ 'success' => false, 'data' => $service->data ]);    
             }
             
             return response()->json([ 'success' => true, 'data' => $service->data ]);
