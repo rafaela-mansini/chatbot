@@ -12,7 +12,7 @@ const Chatbot = () => {
     const [objectToSave, setObjectToSave] = useState([]);
     const [nextStep, setNextStep] = useState('');
     const [accessToken, setAccessToken] = useState('');
-    const functionsServer = ['registerAccount', 'login', 'deposit', 'withdraw', 'balance'];
+    const functionsServer = ['registerAccount', 'login', 'deposit', 'withdraw', 'saveCurrency'];
 
     const searchMessageServer = async (message) => {
         const response = await api.get('messages', {
@@ -25,6 +25,11 @@ const Chatbot = () => {
             setMessages([...messages, botMessage]);
             if(response.data.next_step !== null){
                 setNextStep(response.data.next_step);
+                if(response.data.next_step === 'balance') {
+                    balance();
+                    setNextStep('');
+                    setObjectToSave([]);
+                };
             }
         }
     }
@@ -52,8 +57,8 @@ const Chatbot = () => {
             case 'withdraw':
                 withdraw();
                 break;
-            case 'balance':
-                balance();
+            case 'saveCurrency':
+                saveCurrency();
                 break;
             default:
                 break;
@@ -155,7 +160,26 @@ const Chatbot = () => {
             }
         })
         .then((response) => {
-            setMessageBot(response.data.message);
+            setMessageBot(response.data.data.message + ' ' +response.data.data.balance);
+        })
+        .catch((error) => {
+            setMessageBot(error.message);
+        });
+    }
+
+    const saveCurrency = async () => {
+        const data = {
+            "currency": objectToSave[0]
+        }
+        await api.put('config/currency-base', data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        })
+        .then((response) => {
+            setMessageBot(response.data.data.message);
         })
         .catch((error) => {
             setMessageBot(error.message);

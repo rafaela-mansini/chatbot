@@ -34,5 +34,7 @@ return [
     'currencyWithdraw' => 'Do you want to set a currency for this transaction? Type NO to leave the default currency',
     'successWithdraw' => 'Your withdraw was saved.',
     'successWithdraw' => 'Your withdraw was saved',
-    'notBalanceWithdraw' => 'You dont have this amount to make the withdraw',
+    'balance' => 'Your actual balance is: ',
+    'setCurrency' => 'Please, inform your currency',
+    'currencySave' => 'Your new currency was saved',
 ];

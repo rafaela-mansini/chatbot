@@ -19,7 +19,7 @@ class UsersController extends Controller
             $user = auth()->user();
             $user->currency = $request->currency;
             $user->save();
-            return response()->json([ 'success' => true, 'data' => ['user' => $user] ]);
+            return response()->json([ 'success' => true, 'data' => ['user' => $user, 'message' => trans('messages.currencySave')] ]);
         } catch (\Throwable $th) {
             return response()->json([ 'success' => false, 'message' => $th->getMessage() ], 500);
         }

@@ -23,6 +23,7 @@ class TransactionService {
         $this->data = [
             'success' => true,
             'balance' => $this->user->balance,
+            'message' => trans('messages.balance')
         ];
     }
 
