@@ -30,7 +30,7 @@ class TransactionsController extends Controller
         $validated = $request->validated();
 
         try {
-            $currency = (isset($request->currency) && $request->currency !== 'no') ? $request->currency : env('DEFAULT_CURRENCY');
+            $currency = (isset($request->currency) && $request->currency !== 'no') ? $request->currency : (auth()->user()->currency ?? env('DEFAULT_CURRENCY'));
             $service = new TransactionService();
             $service->deposit($request->amount, $currency);
             
@@ -46,7 +46,7 @@ class TransactionsController extends Controller
         $validated = $request->validated();
         
         try {
-            $currency = (isset($request->currency) && $request->currency !== 'no') ? $request->currency : env('DEFAULT_CURRENCY');
+            $currency = (isset($request->currency) && $request->currency !== 'no') ? $request->currency : (auth()->user()->currency ?? env('DEFAULT_CURRENCY'));
             $service = new TransactionService();
             $result = $service->withdraw($request->amount, $currency);
 

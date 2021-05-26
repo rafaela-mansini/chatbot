@@ -29,7 +29,7 @@ const Chatbot = () => {
                     balance();
                     setNextStep('');
                     setObjectToSave([]);
-                };
+                }
             }
         }
     }
@@ -41,6 +41,9 @@ const Chatbot = () => {
         }
         const customerMessage = await buildMessage(message, 'customer');
         setMessages([...messages, customerMessage]);
+        if(message === 'exit'){
+            window.location.reload();
+        }
     }
 
     const sendFunctionToServer = async (sendTo) => {
@@ -111,8 +114,9 @@ const Chatbot = () => {
 
     const deposit = async () => {
         let currency = objectToSave[1].toLowerCase() == 'no' ? 'no' : objectToSave[1];
+        let amount = parseFloat(objectToSave[0].replace(',', '.'));
         const data = {
-            "amount": objectToSave[0],
+            "amount": amount,
             "currency": currency
         }
         await api.put('transactions/deposit', data, {
@@ -132,8 +136,9 @@ const Chatbot = () => {
 
     const withdraw = async () => {
         let currency = objectToSave[1].toLowerCase() == 'no' ? 'no' : objectToSave[1];
+        let amount = parseFloat(objectToSave[0].replace(',', '.'));
         const data = {
-            "amount": objectToSave[0],
+            "amount": amount,
             "currency": currency
         }
         await api.put('transactions/withdraw', data, {
