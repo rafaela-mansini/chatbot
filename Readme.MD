@@ -85,12 +85,8 @@ With all this installed, now you can clone this project: `https://github.com/raf
 
 After clonning your project, entry in your server folder with the command:
 `cd chatbot` and `cd server`
-Inside your server folder, you need copy the .env.example and set your database information who will use in docker file:
- 
-`cp .env.example .env`
-`sudo vim .env`
+Inside your server folder, run the command `cp .env.example .env` to copy the .env in your folder, and open the file .env in your editor and set your database information who will use in docker file:
 
-in the open file, change the code:
 ```
 DB_CONNECTION=mysql
 DB_HOST=db
@@ -105,4 +101,14 @@ You can change the database, username and password, but not the host, because he
 Now you can run `docker-compose build app` to build the project into docker. When the command finished, run `docker-compose up -d` to up your application.
 
 To install the Laravel dependences and your database configuration, please run:
+
+~~~composer
+docker exec -it chatbot-app bash
+composer install
+php artisan key:generate
+php artisan passport:install
+php artisan migrate
+php artisan db:seed
+
+~~~
  
