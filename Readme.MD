@@ -124,5 +124,11 @@ Follow below this commands:
 - Get your balance: balance or get my balance or see my balance;
 - To set your base currency: set currency or set my currency;
 
+## Features
+  - Unit tests;
+  - Bugs fix;
+  - Validation fields;
+  - When change currency, make exchange;
+  
 ## Credits
 MIT Free Software Code made by Rafaela Mansini [Github](https://github.com/rafaela-mansini) |  [LinkedIn](https://www.linkedin.com/in/rafaela-mansini/?locale=en_US)
