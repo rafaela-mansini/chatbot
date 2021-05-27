@@ -23,7 +23,6 @@ Chatbot is a project who can save currency transactions.
 To run this project, do you need to have installed:<br/>
 [Docker 20.10](https://docs.docker.com/engine/install/ubuntu/);<br/>
 [Docker Compose 1.29](https://docs.docker.com/compose/install/);<br/>
-[Composer 2.0](https://getcomposer.org/download/);<br/>
 [Node 10.19](https://nodejs.org/en/download/package-manager/);<br/>
 
 #### If you use linux / ubuntu, can you follow the steps below to install the requirement, if use another one or something is wrong, please follow the links and install before continue.
@@ -60,25 +59,11 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 ~~~
 
-<i>Composer (https://getcomposer.org/download/)</i>
-~~~bash
-// installl packages php-cli
-sudo apt update
-sudo apt install php-cli unzip
-
-// install composer
-cd ~
-curl -sS https://getcomposer.org/installer -o composer-setup.php
-HASH=`curl -sS https://composer.github.io/installer.sig`
-php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-~~~
-
 <i>Npm (https://nodejs.org/en/download/package-manager/)</i>
 ~~~bash
 sudo apt update
 sudo apt install nodejs
-nodejs -v
-sudo apt install npm
+npm -v
 ~~~
 
 With all this installed, now you can clone this project: `https://github.com/rafaela-mansini/chatbot.git`
@@ -91,8 +76,8 @@ Inside your server folder, run the command `cp .env.example .env` to copy the .e
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=travellist
-DB_USERNAME=travellist_user
+DB_DATABASE=chatbot
+DB_USERNAME=chatbot_user
 DB_PASSWORD=password
 ```
 **NOTE**
@@ -109,6 +94,17 @@ php artisan key:generate
 php artisan passport:install
 php artisan migrate
 php artisan db:seed
-
 ~~~
- 
+And now your backend server is running with all configurations!
+
+Now to run the frontend application, back one folder with `cd ..` and open in your terminal the `cd client`, the folder frontend.
+Run into your terminal:
+
+`npm install`
+and when is finished, to run your application `npm start`
+
+And now, your application it's running!
+
+
+
+
