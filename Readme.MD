@@ -97,9 +97,9 @@ To install the Laravel dependences and your database configuration, please run:
 docker exec -it chatbot-app bash
 composer install
 php artisan key:generate
-php artisan passport:install
 php artisan migrate
 php artisan db:seed
+php artisan passport:install
 ~~~
 And now your backend server is running with all configurations!
 
