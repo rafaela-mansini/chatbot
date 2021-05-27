@@ -103,4 +103,6 @@ DB_PASSWORD=password
 You can change the database, username and password, but not the host, because he will be used into docker file.
 
 Now you can run `docker-compose build app` to build the project into docker. When the command finished, run `docker-compose up -d` to up your application.
+
+To install the Laravel dependences and your database configuration, please run:
  
