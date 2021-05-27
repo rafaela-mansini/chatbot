@@ -9,6 +9,7 @@ Chatbot is a project who can save currency transactions.
   - React.js
   - Composer
   - Docker
+  - API Data fixer
 
 ## Features
  - Register your account;
@@ -84,6 +85,10 @@ DB_PASSWORD=password
 **NOTE**
 You can change the database, username and password, but not the host, because he will be used into docker file.
 
+Into your .env file, insert too your api key from data.fixer in this variable: `CURRENCY_API_KEY`.
+**NOTE** You only can change the `DEFAULT_CURRENCY` in .env if your licence key inside `data.fixer` have this license, in a free license, only a current base in EUR is can possible.
+
+
 Now you can run `docker-compose build app` to build the project into docker. When the command finished, run `docker-compose up -d` to up your application.
 
 To install the Laravel dependences and your database configuration, please run:
@@ -107,5 +112,17 @@ and when is finished, to run your application `npm start`
 And now, your application it's running!
 
 
+## Usage
 
+To use our chatbot, some keywords will be necessary to inform to it.
+Follow below this commands:
 
+- Register your account: account or create my account or create;
+- Make a login: login or make login or entry;
+- Make a deposit: deposit or make deposit or make a deposit;
+- Make a withdraw: withdraw or make withdraw or make a withdraw;
+- Get your balance: balance or get my balance or see my balance;
+- To set your base currency: set currency or set my currency;
+
+## Credits
+MIT Free Software Code made by Rafaela Mansini [Github](https://github.com/rafaela-mansini) |  [LinkedIn](https://www.linkedin.com/in/rafaela-mansini/?locale=en_US)
